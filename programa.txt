@@ -1,0 +1,20 @@
+program EntregaPacote {
+while PackSee == false {
+if IfWallRight == false {
+MvRight
+}
+else {
+if IfWallDown == false {
+MvDown
+}
+else {
+MvLeft
+}
+}
+}
+PackCat
+repeat 3 {
+MvRight
+}
+PackDrop
+}
