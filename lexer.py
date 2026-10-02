@@ -148,3 +148,4 @@ class Lexer:
             resultado += self.avancar()
 
         return int(resultado)
+
