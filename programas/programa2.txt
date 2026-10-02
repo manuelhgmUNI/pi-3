@@ -1,0 +1,21 @@
+program vaivolta
+{
+    repeat 4
+    {
+            MvUp
+    }
+    if PackSee == true
+    {
+        PackCat
+        repeat 4
+        {
+            MvDown
+        }
+        PackDrop
+    }
+    repeat 4
+    {
+        MvDown
+    }
+
+}
