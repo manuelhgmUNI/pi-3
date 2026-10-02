@@ -2,7 +2,7 @@ from lexer import Lexer
 from parser import Parser
 
 #def main():
-with open("programa.txt", "r") as arquivo:
+with open("programas/"+"programa2.txt", "r") as arquivo:
     codigo = arquivo.read()
 
 print("\nchamando lexer...")
