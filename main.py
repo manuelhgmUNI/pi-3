@@ -1,30 +1,34 @@
 from lexer import Lexer
-from Parser import Parser
+from parser import Parser
 
-def main():
-    with open("programa.txt", "r") as arquivo:
-        codigo = arquivo.read()
+#def main():
+with open("programa.txt", "r") as arquivo:
+    codigo = arquivo.read()
 
-    print("\nchamando lexer...")
+print("\nchamando lexer...")
 
-    lexer = Lexer(codigo)
+lexer = Lexer(codigo)
 
-    tokens = lexer.tokenize()
+tokens = lexer.tokenize()
 
-    for token in tokens:
-        print(token)
+for token in tokens:
+    print(token)
 
-    print("\nchamando Parser...")
+print("\nchamando Parser...")
 
-    parser = parser(tokens)
+print("inicializando Parser...")
+parser = Parser(tokens)
 
-    parcerout = parser.programa()
+print("executando Parser...")
+parcerout = parser.parse()
 
-    for parcerout in parcerout:
-        print(parcerout)
+print("imprimindo resultados...")
+print(parcerout[0]+" "+parcerout[1])
+for parcerout[2] in parcerout[2]:
+    print(parcerout[2])
     
 
 
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#    main()

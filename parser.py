@@ -1,4 +1,5 @@
 class Parser:
+    from lexer import Token
 
     def __init__(self, tokens):
         self.tokens = tokens
@@ -33,6 +34,7 @@ class Parser:
     # Programa
 
     def programa(self):
+        resultado = []
 
         self.esperar("PROGRAM")
         nome = self.esperar("IDENTIFIER")
@@ -49,11 +51,16 @@ class Parser:
                 )
             comandos.append(self.comando())
         self.esperar("RBRACE")
-        return {
-            "tipo": "PROGRAM",
-            "nome": nome.valor,
-            "comandos": comandos
-        }
+
+        resultado.append("PROGRAM")
+        resultado.append(nome.valor)
+        resultado.append(comandos)
+        return  resultado
+        #{
+        #    "tipo": "PROGRAM",
+        #    "nome": nome.valor,
+        #    "comandos": comandos
+        #}
 
     # Comandos
 
