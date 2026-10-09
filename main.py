@@ -14,7 +14,7 @@ tokens = lexer.tokenize()
 for token in tokens:
     print(token)
 
-print("\nchamando Parser...")
+#print("\nchamando Parser...")
 
 print("inicializando Parser...")
 parser = Parser(tokens)
@@ -23,10 +23,16 @@ print("executando Parser...")
 parcerout = parser.parse()
 
 print("imprimindo resultados...")
-print(parcerout[0]+" "+parcerout[1])
-for parcerout[2] in parcerout[2]:
-    print(parcerout[2])
-    
+print("Program "+parcerout.nome)
+Po = parcerout.comandos
+for Po in Po:
+    print(Po)
+
+# print(parcerout[0]+" "+parcerout[1])
+#for parcerout[2] in parcerout[2]:
+   #print(parcerout[2])
+
+#print(type(parcerout[2][0]))   
 
 
 

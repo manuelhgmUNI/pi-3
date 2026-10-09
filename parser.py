@@ -1,5 +1,7 @@
+from lexer import Token
+from AST_nodes import (Program, Movimento, PackCat, PackDrop, Condicao, If, While, Repeat,)
+
 class Parser:
-    from lexer import Token
 
     def __init__(self, tokens):
         self.tokens = tokens
@@ -34,7 +36,7 @@ class Parser:
     # Programa
 
     def programa(self):
-        resultado = []
+        #resultado = []
 
         self.esperar("PROGRAM")
         nome = self.esperar("IDENTIFIER")
@@ -52,10 +54,10 @@ class Parser:
             comandos.append(self.comando())
         self.esperar("RBRACE")
 
-        resultado.append("PROGRAM")
-        resultado.append(nome.valor)
-        resultado.append(comandos)
-        return  resultado
+        #resultado.append("PROGRAM")
+        #resultado.append(nome.valor)
+        #resultado.append(comandos)
+        return Program((nome.valor), comandos)
         #{
         #    "tipo": "PROGRAM",
         #    "nome": nome.valor,
@@ -101,28 +103,36 @@ class Parser:
 
     # Movimento
 
+    #def movimento(self):
+    #    token = self.avancar()
+    #    return {
+    #        "tipo": "MOVIMENTO",
+    #        "direcao": token.tipo
+    #    }
+    
     def movimento(self):
         token = self.avancar()
-        return {
-            "tipo": "MOVIMENTO",
-            "direcao": token.tipo
-        }
-    
+        return Movimento(token.tipo)
+
     # PackCat
 
+    #def pack_cat(self):
+    #    token = self.esperar("PACK_CAT")
+    #    return {
+    #        "tipo": "PACK_CAT"
+    #    }
+
     def pack_cat(self):
-        token = self.esperar("PACK_CAT")
-        return {
-            "tipo": "PACK_CAT"
-        }
+        self.esperar("PACK_CAT")
+        return PackCat()
+
 
     # PackDrop
 
     def pack_drop(self):
-        token = self.esperar("PACK_DROP")
-        return {
-            "tipo": "PACK_DROP"
-        }
+        self.esperar("PACK_DROP")
+        #return {"tipo": "PACK_DROP"}
+        return PackDrop()
 
     # IF
 
@@ -152,12 +162,13 @@ class Parser:
                 )
             self.esperar("RBRACE")
 
-        return {
-            "tipo": "IF",
-            "condicao": condicao,
-            "entao": comandos_if,
-            "senao": comandos_else
-        }
+        return If(condicao, comandos_if, comandos_else)
+        #return {
+        #    "tipo": "IF",
+        #    "condicao": condicao,
+        #    "entao": comandos_if,
+        #    "senao": comandos_else
+        #}
     
     # WHILE
 
@@ -172,11 +183,13 @@ class Parser:
                 self.comando()
             )
         self.esperar("RBRACE")
-        return {
-            "tipo": "WHILE",
-            "condicao": condicao,
-            "comandos": comandos
-        }
+
+        return While(condicao, comandos)
+        #return {
+        #    "tipo": "WHILE",
+        #    "condicao": condicao,
+        #    "comandos": comandos
+        #}
 
     # REPEAT
 
@@ -190,11 +203,13 @@ class Parser:
                 self.comando()
             )
         self.esperar("RBRACE")
-        return {
-            "tipo": "REPEAT",
-            "vezes": numero.valor,
-            "comandos": comandos
-        }
+        
+        return Repeat(int (numero.valor), comandos)
+        #return {
+        #    "tipo": "REPEAT",
+        #    "vezes": numero.valor,
+        #    "comandos": comandos
+        #}
 
     # Condição
 
@@ -242,9 +257,10 @@ class Parser:
             )
         
         self.avancar()
-        return {
-            "tipo": "CONDICAO",
-            "esquerda": esquerda.tipo,
-            "operador": operador.tipo,
-            "direita": valor.tipo
-        }
+        return Condicao(esquerda.tipo, operador.tipo, valor.tipo)
+        #return {
+        #    "tipo": "CONDICAO",
+        #    "esquerda": esquerda.tipo,
+        #    "operador": operador.tipo,
+        #    "direita": valor.tipo
+        #}
