@@ -1,5 +1,6 @@
 from lexer import Lexer
 from parser import Parser
+from semantic import SemanticAnalyzer
 
 #def main():
 with open("programas/"+"programa2.txt", "r") as arquivo:
@@ -16,7 +17,7 @@ for token in tokens:
 
 #print("\nchamando Parser...")
 
-print("inicializando Parser...")
+print("\ninicializando Parser...")
 parser = Parser(tokens)
 
 print("executando Parser...")
@@ -27,6 +28,14 @@ print("Program "+parcerout.nome)
 Po = parcerout.comandos
 for Po in Po:
     print(Po)
+
+print("\niniciando analizador...")
+fiscal = SemanticAnalyzer()
+
+print("executando analize semantica...")
+fiscal.analisar(parcerout)
+
+print("analize concluida!")
 
 # print(parcerout[0]+" "+parcerout[1])
 #for parcerout[2] in parcerout[2]:
