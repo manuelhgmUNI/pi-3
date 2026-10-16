@@ -1,0 +1,7 @@
+program erro1
+{
+    repeat 1
+    {    
+        
+    }
+}

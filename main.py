@@ -3,7 +3,7 @@ from parser import Parser
 from semantic import SemanticAnalyzer
 
 #def main():
-with open("programas/"+"programa2.txt", "r") as arquivo:
+with open("programas/"+"programaerro1.txt", "r") as arquivo:
     codigo = arquivo.read()
 
 print("\nchamando lexer...")
