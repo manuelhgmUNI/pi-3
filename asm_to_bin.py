@@ -3,20 +3,21 @@ tipo_I = {"addi","lw","sw","beq"}
 tipo_J = ["j"]
 
 def asm_bin(codigo):
-    codigo.replace(",", "")
+    codigo = codigo.replace(",", "")
     linha = codigo.splitlines()
     cbin = []
     for i in range (len(linha)):
         palavras = linha[i].split(" ")
+        print(palavras)
         ID = palavras[0]
 
         if ID in tipo_R:
-            rd = bin(int(reg_to_num(palavras[1])))[2:]
-            rs = bin(int(reg_to_num(palavras[2])))[2:]
-            rt = bin(int(reg_to_num(palavras[3])))[2:]
+            rd = format(int(reg_to_num(palavras[1])), "03b")
+            rs = format(int(reg_to_num(palavras[2])), "03b")
+            rt = format(int(reg_to_num(palavras[3])), "03b")
 
         if ID in tipo_I:
-            rt = bin(int(reg_to_num(palavras[1])))[2:]
+            rt = format(int(reg_to_num(palavras[1])), "03b")
 
         match ID:
             # R - tipo 4 | rs 3 | rt 3 | rd 3 | funct 3
@@ -34,21 +35,21 @@ def asm_bin(codigo):
 
             case "addi": #addi $rt, $rs, imm
                 rs =  format(int((reg_to_num(palavras[2]))), "03b")
-                imm = format(int(palavras[3]), "03b")
+                imm = format(int(palavras[3]), "06b")
 
                 cbin.append("0100"+rt+rs+imm)
 
             case "lw":   #lw $rt, imm($rs) 
                 x =   palavras[2].split("(")
-                rs =  format(int(reg_to_num(palavras[2].replace(")", ""))), "03b")
-                imm = format(int(x[0]), "03b")
+                rs =  format(int(reg_to_num(x[1].replace(")", ""))), "03b")
+                imm = format(int(x[0]), "06b")
 
                 cbin.append("1011"+rt+rs+imm)
 
             case "sw":   #sw $rt, imm($rs) 
                 x =   palavras[2].split("(")
-                rs =  format(int(reg_to_num(palavras[2].replace(")", ""))), "03b")
-                imm = format(int(x[0]), "03b")
+                rs =  format(int(reg_to_num(x[1].replace(")", ""))), "03b")
+                imm = format(int(x[0]), "06b")
 
                 cbin.append("1111"+rt+rs+imm)
 
@@ -59,13 +60,26 @@ def asm_bin(codigo):
                 cbin.append("1000"+rt+rs+imm)
             # J
             case "j":
-                cbin.append("0010"+bin(palavras[1], "03b"))
+                cbin.append("0010"+format(palavras[1], "07b"))
 
     return cbin
+
+
 def reg_to_num(reg):
-    num = 0
-    if reg == "SWs" or reg == "LEDs":
-        num =  7
-    num = reg.replace("$", "")
-    return num.replace("r", "")
-        
+    if reg in {"SWs", "LEDs"}:
+        return "7"
+
+    return reg.replace("$", "").replace("r", "")
+
+codigo = """
+add $r1, $r2, $r3
+addi $r1, $r2, 5
+lw $r1, 8($r2)
+sw $r1, 8($r2)
+beq $r1, $r2, 3
+"""
+
+resultado = asm_bin(codigo)
+
+for instrucao in resultado:
+    print(instrucao, len(instrucao))
