@@ -8,7 +8,7 @@ def asm_bin(codigo):
     cbin = []
     for i in range (len(linha)):
         palavras = linha[i].split(" ")
-        print(palavras)
+        #print(palavras)
         ID = palavras[0]
 
         if ID in tipo_R:
@@ -70,16 +70,3 @@ def reg_to_num(reg):
         return "7"
 
     return reg.replace("$", "").replace("r", "")
-
-codigo = """
-add $r1, $r2, $r3
-addi $r1, $r2, 5
-lw $r1, 8($r2)
-sw $r1, 8($r2)
-beq $r1, $r2, 3
-"""
-
-resultado = asm_bin(codigo)
-
-for instrucao in resultado:
-    print(instrucao, len(instrucao))
