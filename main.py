@@ -1,6 +1,8 @@
 from lexer import Lexer
 from parser import Parser
 from semantic import SemanticAnalyzer
+from Assembly_tradutor import Translator
+from asm_to_bin import asm_bin
 
 #def main():
 with open("programas/"+"programa2.txt", "r") as arquivo:
@@ -37,13 +39,24 @@ fiscal.analisar(parcerout)
 
 print("analize concluida!")
 
-# print(parcerout[0]+" "+parcerout[1])
-#for parcerout[2] in parcerout[2]:
-   #print(parcerout[2])
+codigo = """
+Add $r1, $r2, $r3
+addi $r1, $r2, 5
+lw $r1, 8($r2)
+sw $r1, 8($r2)
+beq $r1, $r2, 3
+"""
 
-#print(type(parcerout[2][0]))   
+resultado = asm_bin(codigo)
+
+for instrucao in resultado:
+    print(instrucao, len(instrucao))
 
 
+#==== ESPERANDO CONSERTO DO TRADUTRO ASM ====
+#Tradutor = Translator()
+#asm = Tradutor.traduzir(parcerout)
 
-#if __name__ == "__main__":
-#    main()
+#for asm in asm:
+#    print(asm)
+

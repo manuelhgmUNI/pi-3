@@ -3,12 +3,13 @@ tipo_I = {"addi","lw","sw","beq"}
 tipo_J = ["j"]
 
 def asm_bin(codigo):
+    codigo = codigo.casefold()
     codigo = codigo.replace(",", "")
     linha = codigo.splitlines()
     cbin = []
     for i in range (len(linha)):
         palavras = linha[i].split(" ")
-        print(palavras)
+        #print(palavras)
         ID = palavras[0]
 
         if ID in tipo_R:
@@ -71,15 +72,15 @@ def reg_to_num(reg):
 
     return reg.replace("$", "").replace("r", "")
 
-codigo = """
-add $r1, $r2, $r3
-addi $r1, $r2, 5
-lw $r1, 8($r2)
-sw $r1, 8($r2)
-beq $r1, $r2, 3
-"""
+#codigo = """
+#Add $r1, $r2, $r3
+#addi $r1, $r2, 5
+#lw $r1, 8($r2)
+#sw $r1, 8($r2)
+#beq $r1, $r2, 3
+#"""
 
-resultado = asm_bin(codigo)
+#resultado = asm_bin(codigo)
 
-for instrucao in resultado:
-    print(instrucao, len(instrucao))
+#for instrucao in resultado:
+#    print(instrucao, len(instrucao))
