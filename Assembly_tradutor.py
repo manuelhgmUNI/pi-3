@@ -154,10 +154,10 @@ class Translator:
             if esperado == 1:
                 self.emitir(f"BEQ $r7, $r0, {label_falso}")
             else:
-                self.emitir(f"BNE $r7, $r0, {label_falso}")
+                self.emitir(f"BNE $r7, $r0, {label_falso}") # n existe bne no mini mips
         elif operador == "NOT_EQUAL":
             if esperado == 1:
-                self.emitir(f"BNE $r7, $r0, {label_falso}")
+                self.emitir(f"BNE $r7, $r0, {label_falso}") # n existe bne no mini mips
             else:
                 self.emitir(f"BEQ $r7, $r0, {label_falso}")
         else:
