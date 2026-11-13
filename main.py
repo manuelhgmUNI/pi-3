@@ -49,8 +49,9 @@ lw $r1, 8($r2)
 sw $r1, 8($r2)
 beq $r1, $r2, 3
 """
-for asm in asm:
-    print(asm)
+
+print(asm)
+
 resultado = asm_bin(asm)
 
 for instrucao in resultado:

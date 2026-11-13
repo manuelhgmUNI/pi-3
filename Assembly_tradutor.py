@@ -400,7 +400,7 @@ class Translator:
 
         return False
 
-    # Traduz REPEAT
+        # Traduz REPEAT
     def traduzir_repeat(self, comando):
 
         numero = comando.vezes
@@ -448,13 +448,3 @@ class Translator:
         self.emitir_j(inicio)
 
         self.marcar(fim)
-
-        # Executa comandos do Repeat
-        self.visitar(comando.comandos)
-
-        # Decrementa contador
-        self.emitir(f"LW $r6, {memoria}")
-        self.emitir("ADDI $r6, $r6, -1")
-        self.emitir(f"SW $r6, {memoria}")
-        self.emitir(f"J {label_inicio}")
-        self.emitir(f"{label_fim}:")
