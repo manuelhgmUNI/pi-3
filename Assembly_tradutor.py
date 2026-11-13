@@ -23,7 +23,14 @@ class Translator:
             "IF_WALL_DOWN": (7, "$r5"),
             "IF_WALL_LEFT": (8, "$r5"),
             "IF_WALL_RIGHT": (6, "$r5"),
-            "PACK_SEE": (4, "$r4")
+            "PACK_SEE": (4, "$r4"),
+
+            # Compatibilidade com valores textuais do Lexer
+            "IFWALLUP": (5, "$r5"),
+            "IFWALLDOWN": (7, "$r5"),
+            "IFWALLLEFT": (8, "$r5"),
+            "IFWALLRIGHT": (6, "$r5"),
+            "PACKSEE": (4, "$r4")
         }
 
     # Adiciona uma instrução
@@ -47,6 +54,13 @@ class Translator:
     # Emite um J com destino interno
     def emitir_j(self, destino):
         self.codigo.append(("J", destino))
+
+    # Normaliza valores recebidos da AST
+    def normalizar(self, elemento):
+        if hasattr(elemento, "tipo"):
+            return str(elemento.tipo).upper()
+
+        return str(elemento).upper()
 
     # Converte os desvios internos em endereços numéricos
     def resolver_desvios(self):
@@ -169,13 +183,19 @@ class Translator:
     # Traduz movimentos
     def traduzir_movimento(self, comando):
 
-        direcao = comando.direcao
+        direcao = self.normalizar(comando.direcao)
 
         movimentos = {
             "MV_UP": ("$r2", 1, 2),
             "MV_RIGHT": ("$r1", 1, 1),
             "MV_DOWN": ("$r2", -1, 2),
-            "MV_LEFT": ("$r1", -1, 1)
+            "MV_LEFT": ("$r1", -1, 1),
+
+            # Compatibilidade com valores textuais
+            "MVUP": ("$r2", 1, 2),
+            "MVRIGHT": ("$r1", 1, 1),
+            "MVDOWN": ("$r2", -1, 2),
+            "MVLEFT": ("$r1", -1, 1)
         }
 
         if direcao not in movimentos:
@@ -233,9 +253,9 @@ class Translator:
     # Traduz condições
     def traduzir_condicao(self, condicao, destino_falso):
 
-        sensor = condicao.esquerda
-        operador = condicao.operador
-        valor = condicao.direita
+        sensor = self.normalizar(condicao.esquerda)
+        operador = self.normalizar(condicao.operador)
+        valor = self.normalizar(condicao.direita)
 
         if sensor not in self.sensores:
             raise ValueError(
@@ -250,10 +270,10 @@ class Translator:
         )
 
         # Converte o valor booleano
-        if valor is True or str(valor).upper() == "TRUE":
+        if valor == "TRUE":
             esperado = 1
 
-        elif valor is False or str(valor).upper() == "FALSE":
+        elif valor == "FALSE":
             esperado = 0
 
         else:
@@ -428,6 +448,7 @@ class Translator:
         self.emitir_j(inicio)
 
         self.marcar(fim)
+
         # Executa comandos do Repeat
         self.visitar(comando.comandos)
 
