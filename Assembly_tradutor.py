@@ -448,12 +448,3 @@ class Translator:
         self.emitir_j(inicio)
 
         self.marcar(fim)
-
-        # Retorna ao início
-        self.emitir_j(inicio)
-
-        self.marcar(fim)emoria}")
-        self.emitir("ADDI $r6, $r6, -1")
-        self.emitir(f"SW $r6, {memoria}")
-        self.emitir(f"J {label_inicio}")
-        self.emitir(f"{label_fim}:")
