@@ -39,15 +39,19 @@ fiscal.analisar(parcerout)
 
 print("analize concluida!")
 
-codigo = """
+tradutor = Translator()
+asm = tradutor.traduzir(parcerout)
+
+codigo_test = """
 Add $r1, $r2, $r3
 addi $r1, $r2, 5
 lw $r1, 8($r2)
 sw $r1, 8($r2)
 beq $r1, $r2, 3
 """
-
-resultado = asm_bin(codigo)
+for asm in asm:
+    print(asm)
+resultado = asm_bin(asm)
 
 for instrucao in resultado:
     print(instrucao, len(instrucao))
