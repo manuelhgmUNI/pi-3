@@ -1,4 +1,3 @@
-
 from AST_nodes import (
     Program,
     Movimento,
@@ -443,6 +442,11 @@ class Translator:
         self.emitir(
             "addi $r6, $r6, -1"
         )
+
+        # Retorna ao início
+        self.emitir_j(inicio)
+
+        self.marcar(fim)
 
         # Retorna ao início
         self.emitir_j(inicio)
